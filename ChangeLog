@@ -1,0 +1,24 @@
+2011-11-10 Haiyong Zheng <zhenghaiyong@gmail.com>
+	*添加总控Makefile
+
+2011-11-30 Jiakun Huang <huangjiakun1991@gmail.com>  Luji Cui <cuiluji@126.com>
+	*完成GUI测试版
+	*在GUI版中添加二次认证功能
+
+2011-10-08 Jiakun Huang <huangjiakun1991@gmail.com>
+	*输出信息全部改成中文
+	*增加socket()函数的空间释放
+	*增加ioctl()函数的异常处理
+	*读取用户名、密码和网卡名称的函数由gets()改成fgets()
+
+2011-09-22 Jiakun Huang <huangjiakun1991@gmail.com>
+	*修复不能注销的BUG
+
+2011-09-22 Jiakun Huang <huangjiakun1991@gmail.com>
+	*添加ChangeLog以及README文件
+	*完善Makefile
+	*h3c_ouc.c中的gets函数改为fgets，避免了堆栈溢出的警告
+
+2011-09-21 Jiakun Huang <huangjiakun1991@gmail.com>
+	*程序第一次正式发布
+	

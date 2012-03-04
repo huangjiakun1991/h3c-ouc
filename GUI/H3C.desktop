@@ -1,0 +1,16 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=0.01
+Encoding=UTF-8
+Name=H3C
+Categories=Network;GTK;GNOME;
+GenericName=GTK+ H3C-Client
+Comment=ISP Authentication
+Exec=/usr/bin/gksu /usr/bin/h3c
+Icon=/usr/share/gh3c/h3c.png
+StartupNotify=true
+StartupWMClass=H3C-Client
+Terminal=false
+Type=Application
+Name[zh_CN]=H3C

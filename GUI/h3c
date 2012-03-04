@@ -1,0 +1,12 @@
+#!/bin/bash
+
+datadir=/usr/share/gh3c/
+PYTHON_EXEC=/usr/bin/python
+
+cd ${datadir}
+export PYTHONPATH="$PYTHONPATH:~/.gh3c/"
+exec -a h3c ${PYTHON_EXEC} -OO g-h3c_ouc.py $@
+
+
+
+
