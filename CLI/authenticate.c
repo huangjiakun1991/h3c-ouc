@@ -7,7 +7,7 @@
  */
 //常量
 
-
+//认证主函数
 int Authentication(char *UserName,char *Password,char *DeviceName)
 {
     char	errbuf[PCAP_ERRBUF_SIZE];
@@ -44,7 +44,7 @@ int Authentication(char *UserName,char *Password,char *DeviceName)
     pcap_compile(adhandle, &fcode, FilterStr, 1, 0xff);
     pcap_setfilter(adhandle, &fcode);
 
-
+    //开始认证
     START_AUTHENTICATION:
     {
         int retcode;
@@ -182,12 +182,14 @@ int Authentication(char *UserName,char *Password,char *DeviceName)
                    }
               }
             }
+            //认证成功
             else if ((EAP_Code)captured[18] == SUCCESS)
             {
 		 char cmd[30];
 		 strcpy(cmd,"dhclient ");
 		 strcat(cmd,DeviceName);
 		 system(cmd);
+                 //建立子进程，后台运行循环体
                  pid_t pid;
                  pid=fork();
                    if(pid<0)
@@ -214,7 +216,7 @@ int Authentication(char *UserName,char *Password,char *DeviceName)
     return 0;
 }
 
-
+//获取设备的MAC地址
 static
 void GetMacFromDevice(uint8_t mac[6], const char *devicename)
 {
@@ -238,7 +240,7 @@ void GetMacFromDevice(uint8_t mac[6], const char *devicename)
     }  
     close(sock);
 }
-
+//发送EAP-START开始认证包
 static
 void SendStartPkt(pcap_t *handle, const uint8_t localmac[])
 {
@@ -263,7 +265,7 @@ void SendStartPkt(pcap_t *handle, const uint8_t localmac[])
 
 
 
-
+//发送用户名
 static
 void SendResponseIdentity(pcap_t *adhandle, const uint8_t request[], const uint8_t ethhdr[], const uint8_t ip[4], const char username[])
 {
@@ -317,7 +319,7 @@ void SendResponseIdentity(pcap_t *adhandle, const uint8_t request[], const uint8
     return;
 }
 
-
+//发送加密后的密码
 static
 void SendResponseMD5(pcap_t *handle, const uint8_t request[], const uint8_t ethhdr[], const char username[], const char passwd[])
 {
@@ -362,7 +364,7 @@ void SendResponseMD5(pcap_t *handle, const uint8_t request[], const uint8_t ethh
     pcap_sendpacket(handle, response, packetlen);
 }
 
-
+//注销
 void SendLogoffPkt(char *DeviceName)
 {
     uint8_t packet[18];
@@ -452,7 +454,7 @@ void FillMD5Area(uint8_t digest[], uint8_t id, const char passwd[], const uint8_
 
 
 }
-
+//从MAC地址获取IP
 void GetIpFromDevice(uint8_t ip[4], const char DeviceName[])
 {
     int fd;
@@ -479,6 +481,8 @@ void GetIpFromDevice(uint8_t ip[4], const char DeviceName[])
     close(fd);
     return;
 }
+
+//获取网络状态：网线是否插好
 int GetNetState(char *devicename)
 {
     char    buffer[BUFSIZ];

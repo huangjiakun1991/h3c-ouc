@@ -28,6 +28,7 @@ int main(int argc,char *argv[])
    int c=0,i,j;
    int opt;
    opterr = 0;
+   //开始解析命令行
    for(i=0;i<argc;i++)
      {
       for(j=0;j<strlen(argv[i]);j++)
@@ -47,6 +48,7 @@ int main(int argc,char *argv[])
 	{"logoff",0,NULL,'l'},       
 	{NULL,0,NULL,0},
     };
+    //命令行包含的选项
     static const char *options="u::p::n::l::h";
     if(argc==1)
 	{
@@ -58,6 +60,7 @@ int main(int argc,char *argv[])
     {
 	switch(opt)
        {
+             //用户名
              case 'u':
              if(checkprocess()==-1)
              {
@@ -86,7 +89,7 @@ int main(int argc,char *argv[])
                    }
 		  }
 	      break;
-              
+             //密码 
              case 'p':
                 if(checkprocess()==-1)
                 {
@@ -116,7 +119,7 @@ int main(int argc,char *argv[])
                    strcpy(password,argv[optind]);
                   }
               break;
-	      
+	     //网卡名称 
              case 'n':
                if(checkprocess()==-1)
                 {
@@ -142,10 +145,12 @@ int main(int argc,char *argv[])
                   strcpy(devicename,argv[optind]);
                  }
               break;
+             //帮助信息
              case 'h':
               print_help();
 	      exit(0);
               break;
+             //注销
              case 'l':
               if(argv[optind]==NULL)
 		  getDevice();
@@ -188,6 +193,8 @@ void print_help()
                 printf("\th3c_ouc -u abc -p 1234 -n eth0\n");
                 printf("\t也可以直接使用 h3c_ouc -u 按照提示输入。\n");
 	}
+
+//用户未输入用户名的处理
 void getUserName()
 {
      char temp[100];
@@ -204,6 +211,8 @@ void getUserName()
      else
          memcpy(username,temp,strlen(temp)-1);
 }
+
+//用户未输入密码的处理
 void getPassword()
 {
      char c,temp[100];
@@ -225,7 +234,7 @@ void getPassword()
          memcpy(password,temp,strlen(temp)-1);
          set_disp_mode(STDIN_FILENO,1);
 }
-
+//用户未输入网卡名称的处理
 void getDevice()
 {
      char *temp;  
@@ -242,7 +251,7 @@ void getDevice()
      else
          memcpy(devicename,temp,strlen(temp)-1);
 }
-
+//取消密码回显功能
 int set_disp_mode(int fd,int option)
 
 {
@@ -263,7 +272,7 @@ int set_disp_mode(int fd,int option)
    }
    return 0;
 }
-
+//检测是否已经登录
 int checkprocess()
 {
     char command[]="ps -e|grep -w h3c_ouc";
